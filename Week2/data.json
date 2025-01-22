@@ -1,0 +1,56 @@
+{
+    "id": "123",
+	"username": "janedoe",
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "password": "hashedpassword",
+    "posts": [
+        {
+            "id": "456",
+            "text": "Hello, world!",
+            "date": "2025–01–10",
+            "comments": [
+                {
+                    "comment_id": "789",
+                    "user_id": "456",
+                    "text": "Nice post!",
+                    "date": "2025–01–10"
+                }
+            ],
+            "likes": [
+                {
+                    "id": "1011",
+                    "user_id": "789",
+                    "date": "2025–01–10"
+                }
+            ]
+        },
+        {
+            "id": "1012",
+            "text": "I love document databases!",
+            "date": "2025–01–11",
+            "comments": [],
+            "likes": []
+        }
+    ],
+    "followers": [
+        {
+            "user_id": "456",
+            "name": "John Smith"
+        },
+        {
+            "user_id": "789",
+            "name": "Alice Johnson"
+        }
+    ],
+    "following": [
+        {
+            "user_id": "456",
+            "name": "John Smith"
+        },
+        {
+            "user_id": "789",
+            "name": "Alice Johnson"
+        }
+    ]
+}
