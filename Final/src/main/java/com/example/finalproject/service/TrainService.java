@@ -2,7 +2,9 @@ package com.example.finalproject.service;
 
 import com.example.finalproject.dto.ReservationRequest;
 import com.example.finalproject.entity.Route;
+import com.example.finalproject.entity.Station;
 import com.example.finalproject.entity.Ticket;
+import com.example.finalproject.entity.Train;
 import com.example.finalproject.entity.TrainSchedule;
 import com.example.finalproject.handler.DatabaseException;
 import com.example.finalproject.handler.ReservationException;
@@ -110,19 +112,25 @@ public class TrainService {
         trainSchedule.setTo(trainRepository.getStationById(route.getArrivalStationId()));
     }
 
-    public void addNewTrain(String name, int capacity) {
-        trainRepository.addTrain(name, capacity);
+    public Train addNewTrain(String name, int capacity) {
+        int id = trainRepository.addTrain(name, capacity);
+        return trainRepository.getTrainById(id);
     }
 
-    public void addNewSchedule(int trainId, int routeId, LocalDateTime dep, LocalDateTime arr) {
-        trainRepository.addTrainSchedule(trainId, routeId, dep, arr);
+    public TrainSchedule addNewSchedule(int trainId, int routeId, LocalDateTime dep, LocalDateTime arr) {
+        long id = trainRepository.addTrainSchedule(trainId, routeId, dep, arr);
+        TrainSchedule ts = trainRepository.getTrainScheduleById(id);
+        setProperties(ts);
+        return ts;
     }
 
-    public void addNewRoute(int fromStationId, int toStationId) {
-        trainRepository.addRoute(fromStationId, toStationId);
+    public Route addNewRoute(int fromStationId, int toStationId) {
+        int id = trainRepository.addRoute(fromStationId, toStationId);
+        return trainRepository.getRouteById(id);
     }
 
-    public void addNewStation(String name, String city, String state) {
-        trainRepository.addStation(name, city, state);
+    public Station addNewStation(String name, String city, String state) {
+        int id = trainRepository.addStation(name, city, state);
+        return trainRepository.getStationById(id);
     }
 }

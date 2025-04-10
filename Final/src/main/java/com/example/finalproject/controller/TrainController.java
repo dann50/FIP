@@ -3,7 +3,10 @@ package com.example.finalproject.controller;
 import com.example.finalproject.dto.AddScheduleRequest;
 import com.example.finalproject.dto.AddStationRequest;
 import com.example.finalproject.dto.ReservationRequest;
+import com.example.finalproject.entity.Route;
+import com.example.finalproject.entity.Station;
 import com.example.finalproject.entity.Ticket;
+import com.example.finalproject.entity.Train;
 import com.example.finalproject.entity.TrainSchedule;
 import com.example.finalproject.service.TrainService;
 import jakarta.validation.Valid;
@@ -75,28 +78,25 @@ public class TrainController {
     }
 
     @PostMapping("/add-train")
-    public ResponseEntity<HttpStatus> addTrain(@RequestParam String name, @RequestParam int capacity) {
-        trainService.addNewTrain(name, capacity);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Train> addTrain(@RequestParam String name, @RequestParam int capacity) {
+        return ResponseEntity.ok(trainService.addNewTrain(name, capacity));
     }
 
     @PostMapping("/add-schedule")
-    public ResponseEntity<HttpStatus> addSchedule(@RequestBody @Valid AddScheduleRequest request) {
-        trainService.addNewSchedule(
-            request.getTrainId(), request.getRouteId(), request.getDep(), request.getArr());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<TrainSchedule> addSchedule(@RequestBody @Valid AddScheduleRequest request) {
+
+        return ResponseEntity.ok(trainService.addNewSchedule(
+            request.getTrainId(), request.getRouteId(), request.getDep(), request.getArr()));
     }
 
     @PostMapping("/add-route")
-    public ResponseEntity<HttpStatus> addRoute(@RequestParam int fromStationId, @RequestParam int toStationId) {
-        trainService.addNewRoute(fromStationId, toStationId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Route> addRoute(@RequestParam int fromStationId, @RequestParam int toStationId) {
+        return ResponseEntity.ok(trainService.addNewRoute(fromStationId, toStationId));
     }
 
     @PostMapping("/add-station")
-    public ResponseEntity<HttpStatus> addStation(@RequestBody @Valid AddStationRequest request) {
-        trainService.addNewStation(request.getName(), request.getCity(), request.getState());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Station> addStation(@RequestBody @Valid AddStationRequest request) {
+        return ResponseEntity.ok(trainService.addNewStation(request.getName(), request.getCity(), request.getState()));
     }
 
 }

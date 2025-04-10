@@ -86,7 +86,7 @@ public class TrainRepository {
         return id;
     }
 
-    public Train getTrainById(long id) {
+    public Train getTrainById(int id) {
         return jdbcTemplate.queryForObject(SELECT_TRAIN_BY_ID, DatabaseMappers.TrainMapper, id);
     }
 
