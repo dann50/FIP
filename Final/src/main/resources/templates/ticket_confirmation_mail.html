@@ -29,7 +29,7 @@
         <li><strong>(Est.) Arrives </strong> - <span th:text="${arrival}"></span></li>
     </ul>
 
-    <p style="color: #555555;">The ticket is also attached below for download. You can cancel the reservation <a th:href="@{'http://localhost:8080/api/cancel-ticket?id=' + ${ticketId}}" th:text="'here'"></a></p>
+    <p style="color: #555555;">The ticket is also attached below for download. You can cancel the reservation <a th:href="@{${contextPath} + '/api/cancel-ticket?id=' + ${ticketId}}" th:text="'here'"></a></p>
 
     <div style="text-align: center; color: #777777; font-size: 12px; margin-top: 30px;">
         <p>You are receiving this email because you booked a train with FIP.</p>

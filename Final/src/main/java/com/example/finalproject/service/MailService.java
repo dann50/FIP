@@ -3,12 +3,11 @@ package com.example.finalproject.service;
 import com.example.finalproject.entity.Ticket;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.xhtmlrenderer.pdf.ITextRenderer;
@@ -40,6 +39,7 @@ public class MailService {
             mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED, StandardCharsets.UTF_8.name());
 
         Context context = new Context();
+        context.setVariable("contextPath", ServletUriComponentsBuilder.fromCurrentContextPath().build().toString());
         context.setVariable("ticketId", ticket.getId());
         context.setVariable("name", ticket.getPassengerName());
         context.setVariable("seatNumber", ticket.getSeatNumber());
@@ -67,10 +67,12 @@ public class MailService {
         mailSender.send(mimeMessage);
     }
 
-    public void generatePDF(String html, Path pdfPath, Path logoPath) throws IOException {
-        System.out.println(html);
+    private void generatePDF(String html, Path pdfPath, Path logoPath) throws IOException {
         ITextRenderer renderer = new ITextRenderer();
-        renderer.setDocumentFromString(html);
+        // change the src of the image from cid:logo.png to the local logo path.
+        // convert to URI to add the "file:///" prefix and ensure proper formatting
+        String cleaned = html.replace("cid:", logoPath.getParent().toUri().toString());
+        renderer.setDocumentFromString(cleaned);
         renderer.layout();
         renderer.createPDF(Files.newOutputStream(pdfPath));
     }
