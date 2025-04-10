@@ -103,6 +103,7 @@ public class TrainService {
     }
 
     public void cancelTicket(long ticketId) {
+        validateTicket(ticketId);
         trainRepository.updateTicketStatus(ticketId, TicketStatus.Cancelled.toString());
     }
 
@@ -132,5 +133,14 @@ public class TrainService {
     public Station addNewStation(String name, String city, String state) {
         int id = trainRepository.addStation(name, city, state);
         return trainRepository.getStationById(id);
+    }
+
+    public void validateTicket(long id) {
+        Ticket ticket = trainRepository.getTicketById(id);
+        if (ticket == null || ticket.getStatus().equals(TicketStatus.Expired.toString()) ||
+            ticket.getStatus().equals(TicketStatus.Cancelled.toString())) {
+            throw new IllegalArgumentException("Ticket already cancelled or expired");
+        }
+
     }
 }

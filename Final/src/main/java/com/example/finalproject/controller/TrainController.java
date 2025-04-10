@@ -74,6 +74,7 @@ public class TrainController {
 
     @GetMapping("/cancel-ticket")
     public String cancelTicket(@RequestParam long id) {
+        trainService.validateTicket(id);
         return "Are you sure you want to cancel ticket? 1 for yes or 0 for no";
     }
 
